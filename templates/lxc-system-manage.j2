@@ -50,17 +50,17 @@ function success {
 function remove_rules {
     info "Removing LXC IPtables rules."
     # Remove rules from the INPUT chain
-    iptables ${USE_IPTABLES_LOCK} -D INPUT -i "${LXC_BRIDGE}" -p udp --dport 67 -j ACCEPT
-    iptables ${USE_IPTABLES_LOCK} -D INPUT -i "${LXC_BRIDGE}" -p tcp --dport 67 -j ACCEPT
-    iptables ${USE_IPTABLES_LOCK} -D INPUT -i "${LXC_BRIDGE}" -p udp --dport 53 -j ACCEPT
-    iptables ${USE_IPTABLES_LOCK} -D INPUT -i "${LXC_BRIDGE}" -p tcp --dport 53 -j ACCEPT
+    ip6tables ${USE_IPTABLES_LOCK} -D INPUT -i "${LXC_BRIDGE}" -p udp --dport 67 -j ACCEPT
+    ip6tables ${USE_IPTABLES_LOCK} -D INPUT -i "${LXC_BRIDGE}" -p tcp --dport 67 -j ACCEPT
+    ip6tables ${USE_IPTABLES_LOCK} -D INPUT -i "${LXC_BRIDGE}" -p udp --dport 53 -j ACCEPT
+    ip6tables ${USE_IPTABLES_LOCK} -D INPUT -i "${LXC_BRIDGE}" -p tcp --dport 53 -j ACCEPT
 
     # Remove rules from the FORWARDING chain
-    iptables ${USE_IPTABLES_LOCK} -D FORWARD -i "${LXC_BRIDGE}" -j ACCEPT
-    iptables ${USE_IPTABLES_LOCK} -D FORWARD -o "${LXC_BRIDGE}" -j ACCEPT
+    ip6tables ${USE_IPTABLES_LOCK} -D FORWARD -i "${LXC_BRIDGE}" -j ACCEPT
+    ip6tables ${USE_IPTABLES_LOCK} -D FORWARD -o "${LXC_BRIDGE}" -j ACCEPT
 
     # Remove rules from the nat POSTROUTING chain
-    iptables ${USE_IPTABLES_LOCK} -t nat \
+    ip6tables ${USE_IPTABLES_LOCK} -t nat \
                                   -D POSTROUTING \
                                   -s "${LXC_NETWORK}" ! \
                                   -d "${LXC_NETWORK}" \
@@ -91,17 +91,17 @@ function add_rules {
     fi
 
     # Add rules to the INPUT chain
-    iptables ${USE_IPTABLES_LOCK} -I INPUT -i "${LXC_BRIDGE}" -p udp --dport 67 -j ACCEPT
-    iptables ${USE_IPTABLES_LOCK} -I INPUT -i "${LXC_BRIDGE}" -p tcp --dport 67 -j ACCEPT
-    iptables ${USE_IPTABLES_LOCK} -I INPUT -i "${LXC_BRIDGE}" -p udp --dport 53 -j ACCEPT
-    iptables ${USE_IPTABLES_LOCK} -I INPUT -i "${LXC_BRIDGE}" -p tcp --dport 53 -j ACCEPT
+    ip6tables ${USE_IPTABLES_LOCK} -I INPUT -i "${LXC_BRIDGE}" -p udp --dport 67 -j ACCEPT
+    ip6tables ${USE_IPTABLES_LOCK} -I INPUT -i "${LXC_BRIDGE}" -p tcp --dport 67 -j ACCEPT
+    ip6tables ${USE_IPTABLES_LOCK} -I INPUT -i "${LXC_BRIDGE}" -p udp --dport 53 -j ACCEPT
+    ip6tables ${USE_IPTABLES_LOCK} -I INPUT -i "${LXC_BRIDGE}" -p tcp --dport 53 -j ACCEPT
 
     # Add rules to the FORWARDING chain
-    iptables ${USE_IPTABLES_LOCK} -I FORWARD -i "${LXC_BRIDGE}" -j ACCEPT
-    iptables ${USE_IPTABLES_LOCK} -I FORWARD -o "${LXC_BRIDGE}" -j ACCEPT
+    ip6tables ${USE_IPTABLES_LOCK} -I FORWARD -i "${LXC_BRIDGE}" -j ACCEPT
+    ip6tables ${USE_IPTABLES_LOCK} -I FORWARD -o "${LXC_BRIDGE}" -j ACCEPT
 
     # Add rules to the nat POSTROUTING chain
-    iptables ${USE_IPTABLES_LOCK} -t nat \
+    ip6tables ${USE_IPTABLES_LOCK} -t nat \
                                   -A POSTROUTING \
                                   -s "${LXC_NETWORK}" ! \
                                   -d "${LXC_NETWORK}" \
@@ -134,7 +134,7 @@ function pre_up {
 
     # Set the lock type where applicable
     USE_IPTABLES_LOCK="-w"
-    iptables -w -L -n > /dev/null 2>&1 || USE_IPTABLES_LOCK=""
+    ip6tables -w -L -n > /dev/null 2>&1 || USE_IPTABLES_LOCK=""
 }
 
 function start_dnsmasq {

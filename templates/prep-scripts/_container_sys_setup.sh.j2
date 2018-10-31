@@ -25,6 +25,7 @@ mkdir -p /etc/ansible/facts.d
 
 # Create the cache resolvers
 rm /etc/resolv.conf || true
+echo "nameserver 44.81.0.4" >> /etc/resolv.conf
 {% for resolver in lxc_cache_prep_dns %}
 echo "nameserver {{ resolver }}" >> /etc/resolv.conf
 {% endfor %}

@@ -43,6 +43,7 @@ for action in disable mask; do
 done
 
 # Set the IP of the lxcbr0 interface as the DNS server
-echo "nameserver {{ lxc_net_address }}" > /etc/resolv.conf
+echo "nameserver 44.81.0.4" >> /etc/resolv.conf
+echo "nameserver {{ lxc_net_address }}" >> /etc/resolv.conf
 systemctl enable systemd-networkd
 {{ lxc_cache_prep_post_commands }}

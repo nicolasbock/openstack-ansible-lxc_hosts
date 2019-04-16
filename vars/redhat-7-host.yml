@@ -18,7 +18,6 @@ systemd_utils_prefix: "/lib/systemd"
 
 # Required rpm packages.
 _lxc_hosts_distro_packages:
-  - aria2
   - bridge-utils
   - btrfs-progs
   - dbus

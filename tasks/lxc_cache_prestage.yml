@@ -46,17 +46,11 @@
     cache_basename: "{{ lxc_hosts_container_image_url | basename }}"
 
 - name: Pre-stage the LXC image on the system
-  shell: >
-    aria2c
-    --max-connection-per-server=4
-    --allow-overwrite=true
-    --dir=/tmp
-    --out={{ cache_basename }}
-    --check-certificate={{ (lxc_hosts_validate_certs | bool) | lower }}
-    {{ lxc_hosts_container_image_url }}
-    > /var/log/aria2c-image-prestage.log 2>&1
-  args:
-    warn: no
+  get_url:
+    url: "{{ lxc_hosts_container_image_url }}"
+    dest: "{{ cache_basename }}"
+    validate_certs: "{{ (lxc_hosts_validate_certs | bool) | lower }}"
+    force: true
   register: prestage_image
   async: "{{ lxc_cache_prep_timeout | int // 5 }}"
   poll: 0

@@ -15,7 +15,6 @@
 
 # Required packages.
 lxc_hosts_distro_packages:
-  - net-misc/aria2
   - net-misc/bridge-utils
   - sys-fs/btrfs-progs
   - app-admin/cgmanager
